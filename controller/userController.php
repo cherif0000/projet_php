@@ -1,32 +1,106 @@
 <?php
-// Connecter un utilisateur
-if (isset($_POST['btnLogin'])) 
-{
-    $email = $_POST['email'];
-    $password = $_POST['password'];
+session_start();
 
-    // Validation de l'email et du mot de passe
-    if(!(filter_var($email, FILTER_VALIDATE_EMAIL)) || (strlen($password) <8))
-    {
-      $error = "Email ou mot de passe incorrect.";
-      header("Location:login?error=$error");  
+require_once __DIR__ . '/../model/User.php';
+
+$userModel = new User();
+
+// ─── CONNEXION ──────────────────────────────────────────────────
+if (isset($_POST['btnLogin'])) {
+    $email    = trim($_POST['email'] ?? '');
+    $password = $_POST['password'] ?? '';
+
+    if (empty($email) || empty($password)) {
+        $_SESSION['message']      = "Veuillez remplir tous les champs.";
+        $_SESSION['message_type'] = "warning";
+        header('Location: ../login.php');
+        exit;
     }
-    else
-    {
-        // TO DO : Authentification utilisateur depuis la base de données
-    
-        header("Location:listeContacts");
+
+    $user = $userModel->connecter($email, $password);
+
+    if ($user) {
+        // Stocker l'utilisateur en session
+        $_SESSION['user_id']   = $user['id'];
+        $_SESSION['user_nom']  = $user['nom'];
+        $_SESSION['user_role'] = $user['role'];
+
+        $_SESSION['message']      = "Bienvenue, " . $user['nom'] . " !";
+        $_SESSION['message_type'] = "success";
+
+        // Rediriger selon le rôle
+        switch ($user['role']) {
+            case 'admin':
+                header('Location: ../admin.php');
+                break;
+            case 'proprietaire':
+                header('Location: ../view/pages/dashboard.php');
+                break;
+            default:
+                header('Location: ../view/pages/dashboard.php');
+        }
+        exit;
+
+    } else {
+        $_SESSION['message']      = "Email ou mot de passe incorrect.";
+        $_SESSION['message_type'] = "error";
+        header('Location: ../login.php');
+        exit;
     }
-
-
-    // Ici, ajoutez la logique pour vérifier les informations d'identification de l'utilisateur
-    // Par exemple, interroger la base de données pour valider l'email et le mot de passe
-
-    // Si les informations sont correctes, démarrez une session et redirigez l'utilisateur
-    // Sinon, affichez un message d'erreur
-    
-
 }
 
+// ─── INSCRIPTION ────────────────────────────────────────────────
+if (isset($_POST['btnRegister'])) {
+    $prenom   = trim($_POST['prenom'] ?? '');
+    $nom      = trim($_POST['nom'] ?? '');
+    $email    = trim($_POST['email'] ?? '');
+    $password = $_POST['password'] ?? '';
+    $confirm  = $_POST['confirm_password'] ?? '';
 
-?>
+    // Validations
+    if (empty($prenom) || empty($nom) || empty($email) || empty($password)) {
+        $_SESSION['message']      = "Veuillez remplir tous les champs.";
+        $_SESSION['message_type'] = "warning";
+        header('Location: ../inscription.php');
+        exit;
+    }
+
+    if ($password !== $confirm) {
+        $_SESSION['message']      = "Les mots de passe ne correspondent pas.";
+        $_SESSION['message_type'] = "error";
+        header('Location: ../inscription.php');
+        exit;
+    }
+
+    if (strlen($password) < 6) {
+        $_SESSION['message']      = "Le mot de passe doit contenir au moins 6 caractères.";
+        $_SESSION['message_type'] = "warning";
+        header('Location: ../inscription.php');
+        exit;
+    }
+
+    $nomComplet = $prenom . ' ' . $nom;
+    $success    = $userModel->inscrire($nomComplet, $email, $password);
+
+    if ($success) {
+        $_SESSION['message']      = "Compte créé avec succès ! Vous pouvez vous connecter.";
+        $_SESSION['message_type'] = "success";
+        header('Location: ../login.php');
+    } else {
+        $_SESSION['message']      = "Cet email est déjà utilisé.";
+        $_SESSION['message_type'] = "error";
+        header('Location: ../inscription.php');
+    }
+    exit;
+}
+
+// ─── DÉCONNEXION ────────────────────────────────────────────────
+if (isset($_GET['logout'])) {
+    session_destroy();
+    header('Location: ../index.php');
+    exit;
+}
+
+// Si on arrive ici sans POST → rediriger
+header('Location: ../index.php');
+exit;
