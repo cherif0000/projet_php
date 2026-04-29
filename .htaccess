@@ -1,0 +1,20 @@
+RewriteEngine On 
+
+
+RewriteRule ^admin$ admin.php
+RewriteRule ^home$ index.php
+
+
+RewriteRule ^avis$ view/pages/admin/Avis/avis.php
+
+RewriteRule ^demande$ view/pages/admin/DemandeProprietaire/demandeProprietaire.php
+
+RewriteRule ^logement$ view/pages/admin/Logement/logement.php
+
+RewriteRule ^reservationLogement$ view/pages/admin/ReservationLogement/reservationLogement.php
+
+RewriteRule ^excursion$ view/pages/admin/Excursion/excursion.php
+
+RewriteRule ^reservationExcursion$ view/pages/admin/ReservationExcursion/reservationExcursion.php
+
+RewriteRule ^utilisateur$ view/pages/admin/User/user.php

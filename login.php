@@ -2,82 +2,154 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+// Si déjà connecté, rediriger
+if (isset($_SESSION['user_id'])) {
+    header('Location: view/pages/dashboard.php');
+    exit;
+}
 ?>
 <!DOCTYPE html>
-<html lang="fr" class="<?= isset($_COOKIE['theme']) && $_COOKIE['theme'] === 'dark' ? 'dark' : '' ?>">
+<html lang="fr">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Connexion - DakarStay</title>
-    <meta name="description" content="Connectez-vous à votre compte DakarStay.">
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Connexion - DakarStay</title>
+  <meta name="description" content="Connectez-vous à votre compte DakarStay.">
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet">
+  <!-- Favicons -->
+  <link href="public/assets/img/favicon.png" rel="icon">
+  <link href="public/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
-    <!-- Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Poppins:wght@300;400;500;600;700&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    <!-- Styles -->
-    <link rel="stylesheet" href="public/css/style.css">
+  <!-- Vendor CSS -->
+  <link href="public/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="public/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="public/assets/vendor/aos/aos.css" rel="stylesheet">
+
+  <!-- Main CSS -->
+  <link href="public/assets/css/main.css" rel="stylesheet">
 </head>
 
-<body class="animate-fade-in">
+<body class="index-page">
 
-    <div class="form-container animate-scale-in" style="max-width: 450px;">
-        <div class="form-icon">
-            <i class="fas fa-user-circle"></i>
-        </div>
-        <h1 class="form-title">Connexion</h1>
-        <p class="form-subtitle">Accédez à votre espace personnel DakarStay</p>
-
-        <form method="POST" action="controller/UserController.php">
-            <!-- Email -->
-            <div class="form-group">
-                <label for="email" class="form-label">Email</label>
-                <input type="email" name="email" class="form-input" id="email" placeholder="exemple@email.com" required>
-            </div>
-
-            <!-- Mot de passe -->
-            <div class="form-group">
-                <label for="password" class="form-label">Mot de passe</label>
-                <input type="password" name="password" class="form-input" id="password" placeholder="Votre mot de passe"
-                    required>
-            </div>
-
-            <!-- Se souvenir de moi -->
-            <div class="form-checkbox">
-                <input type="checkbox" id="remember" name="remember">
-                <label for="remember">
-                    Se souvenir de moi
-                </label>
-            </div>
-
-            <button type="submit" name="btnLogin" class="form-submit">
-                <i class="fas fa-sign-in-alt"></i> Se connecter
-            </button>
-        </form>
-
-        <div class="form-footer" style="margin-top: 1.5rem;">
-            <a href="#" style="color: var(--muted-foreground); font-size: 0.875rem;">Mot de passe oublié ?</a>
-        </div>
-
-        <div class="form-footer">
-            Pas encore de compte ? <a href="inscription.php">S'inscrire</a>
-        </div>
-        <div class="form-back">
-            <a href="index.php"><i class="fas fa-arrow-left"></i> Retour à l'accueil</a>
-        </div>
+  <!-- HEADER -->
+  <header id="header" class="header d-flex align-items-center sticky-top">
+    <div class="container-fluid container-xl position-relative d-flex align-items-center">
+      <a href="index.php" class="logo d-flex align-items-center me-auto">
+        <h1 class="sitename">DakarStay</h1>
+      </a>
+      <nav id="navmenu" class="navmenu">
+        <ul>
+          <li><a href="index.php">Accueil</a></li>
+          <li><a href="index.php#logements">Logements</a></li>
+          <li><a href="index.php#excursions">Excursions</a></li>
+          <li><a href="index.php#contact">Contact</a></li>
+          <li><a href="login.php" class="active">Connexion</a></li>
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+      <a class="btn-getstarted" href="inscription.php">S'inscrire</a>
     </div>
+  </header>
 
-    <!-- fichier de message -->
-    <?php if (file_exists("public/js/message.php"))
-        include("public/js/message.php"); ?>
+  <main class="main">
+
+    <!-- Hero mini -->
+    <section class="hero section dark-background" style="min-height: 180px;">
+      <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=80" alt="" style="object-fit:cover;width:100%;height:100%;position:absolute;opacity:.4;">
+      <div class="container text-center position-relative py-5" data-aos="fade-up">
+        <h2 class="text-white">Connexion</h2>
+        <p class="text-white-50">Accédez à votre espace personnel DakarStay</p>
+      </div>
+    </section>
+
+    <!-- Formulaire de connexion -->
+    <section class="contact section light-background">
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+        <div class="row justify-content-center">
+          <div class="col-lg-5 col-md-8">
+
+            <div class="card shadow-sm border-0 rounded-4 p-4 mt-4">
+
+              <!-- Flash message -->
+              <?php if (isset($_SESSION['message'])): ?>
+                <div class="alert alert-<?= $_SESSION['message_type'] === 'success' ? 'success' : ($_SESSION['message_type'] === 'warning' ? 'warning' : 'danger') ?> rounded-3">
+                  <?= htmlspecialchars($_SESSION['message']) ?>
+                </div>
+                <?php unset($_SESSION['message'], $_SESSION['message_type']); ?>
+              <?php endif; ?>
+
+              <form method="POST" action="controller/UserController.php">
+
+                <div class="mb-3">
+                  <label for="email" class="form-label fw-semibold">Email</label>
+                  <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                    <input type="email" name="email" id="email" class="form-control" placeholder="exemple@email.com" required>
+                  </div>
+                </div>
+
+                <div class="mb-3">
+                  <label for="password" class="form-label fw-semibold">Mot de passe</label>
+                  <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                    <input type="password" name="password" id="password" class="form-control" placeholder="Votre mot de passe" required>
+                  </div>
+                </div>
+
+                <div class="form-check mb-3">
+                  <input class="form-check-input" type="checkbox" id="remember" name="remember">
+                  <label class="form-check-label text-muted" for="remember">Se souvenir de moi</label>
+                </div>
+
+                <div class="d-grid">
+                  <button type="submit" name="btnLogin" class="btn btn-primary btn-lg">
+                    <i class="bi bi-box-arrow-in-right me-2"></i>Se connecter
+                  </button>
+                </div>
+
+              </form>
+
+              <hr class="my-4">
+
+              <div class="text-center">
+                <p class="mb-1 text-muted">Pas encore de compte ?</p>
+                <a href="inscription.php" class="btn btn-outline-secondary w-100">
+                  <i class="bi bi-person-plus me-2"></i>Créer un compte
+                </a>
+              </div>
+
+              <div class="text-center mt-3">
+                <a href="index.php" class="text-muted small"><i class="bi bi-arrow-left me-1"></i>Retour à l'accueil</a>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER simplifié -->
+  <footer id="footer" class="footer dark-background py-4">
+    <div class="container text-center">
+      <p class="mb-0">© DakarStay — <a href="index.php" class="text-white-50">Retour à l'accueil</a></p>
+    </div>
+  </footer>
+
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+  <div id="preloader"><div></div><div></div><div></div><div></div></div>
+
+  <!-- Vendor JS -->
+  <script src="public/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="public/assets/vendor/aos/aos.js"></script>
+  <script src="public/assets/js/main.js"></script>
 
 </body>
-
 </html>

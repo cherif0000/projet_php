@@ -7,9 +7,9 @@ class Database {
     private static $instance = null;
 
     private string $host     = 'localhost';
-    private string $dbname   = 'logement_recursion';
+    private string $dbname   = 'php_projet';
     private string $user     = 'root';
-    private string $password = '';  // ← change si tu as un mot de passe
+    private string $password = ''; 
 
     private PDO $pdo;
 

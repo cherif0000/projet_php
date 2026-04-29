@@ -20,16 +20,14 @@ if (isset($_POST['btnLogin'])) {
     $user = $userModel->connecter($email, $password);
 
     if ($user) {
-        // Stocker l'utilisateur en session
         $_SESSION['user_id']   = $user['id'];
         $_SESSION['user_nom']  = $user['nom'];
-        $_SESSION['user_role'] = $user['role'];
+        $_SESSION['user_role'] = $user['role_u']; // ✅ Corrigé : role_u
 
         $_SESSION['message']      = "Bienvenue, " . $user['nom'] . " !";
         $_SESSION['message_type'] = "success";
 
-        // Rediriger selon le rôle
-        switch ($user['role']) {
+        switch ($user['role_u']) { // ✅ Corrigé : role_u
             case 'admin':
                 header('Location: ../admin.php');
                 break;
@@ -57,7 +55,6 @@ if (isset($_POST['btnRegister'])) {
     $password = $_POST['password'] ?? '';
     $confirm  = $_POST['confirm_password'] ?? '';
 
-    // Validations
     if (empty($prenom) || empty($nom) || empty($email) || empty($password)) {
         $_SESSION['message']      = "Veuillez remplir tous les champs.";
         $_SESSION['message_type'] = "warning";
@@ -101,6 +98,6 @@ if (isset($_GET['logout'])) {
     exit;
 }
 
-// Si on arrive ici sans POST → rediriger
+// Si on arrive ici sans POST ni GET → rediriger
 header('Location: ../index.php');
 exit;
