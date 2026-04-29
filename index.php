@@ -37,8 +37,14 @@
     <!-- ======= section bannière ======= -->
     <?php require_once("view/sections/vitrine/banniere.php"); ?>
 
+    
+    <!-- ======= section Excursions ======= -->
+    <?php require_once("view/sections/vitrine/excursionVitrine.php"); ?>
+
+    <!-- ======= section Logements ======= -->
+    <?php require_once("view/sections/vitrine/logementVitrine.php"); ?>
+
     <!-- ======= section À propos ======= -->
-  
     <?php require_once("view/sections/vitrine/Apropos.php"); ?>
 
     <!-- ======= section SERVICES ======= -->

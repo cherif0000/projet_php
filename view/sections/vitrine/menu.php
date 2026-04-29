@@ -8,10 +8,10 @@
       <nav id="navmenu" class="navmenu">
         <ul>
           <li><a href="#hero" class="active">Accueil</a></li>
+          <li><a href="#excursions">Excursions</a></li>
+          <li><a href="#logements">Logements</a></li>
           <li><a href="#about">À propos</a></li>
           <li><a href="#services">Services</a></li>
-          <li><a href="#logements">Logements</a></li>
-          <li><a href="#excursions">Excursions</a></li>
           <li><a href="#avis">Avis</a></li>
           <li><a href="#faq">FAQ</a></li>
           <li><a href="#contact">Contact</a></li>
