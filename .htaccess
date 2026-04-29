@@ -13,7 +13,7 @@ RewriteRule ^logement$ view/pages/admin/Logement/logement.php
 
 RewriteRule ^reservationLogement$ view/pages/admin/ReservationLogement/reservationLogement.php
 
-RewriteRule ^excursion$ view/pages/admin/Excursion/excursion.php
+ RewriteRule ^excursion$ view/pages/admin/Excursion/excursion.php
 
 RewriteRule ^reservationExcursion$ view/pages/admin/ReservationExcursion/reservationExcursion.php
 
