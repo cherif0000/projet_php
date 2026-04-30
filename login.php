@@ -1,155 +1,275 @@
-<?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-// Si déjà connecté, rediriger
-if (isset($_SESSION['user_id'])) {
-    header('Location: view/pages/dashboard.php');
-    exit;
-}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Connexion - DakarStay</title>
-  <meta name="description" content="Connectez-vous à votre compte DakarStay.">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Connexion — DakarStay</title>
 
-  <!-- Favicons -->
-  <link href="public/assets/img/favicon.png" rel="icon">
-  <link href="public/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+    <!-- Admin template CSS -->
+    <link href="public/templates/templateAdmin/assets/css/app.min.css" rel="stylesheet">
+    <link href="public/templates/templateAdmin/assets/css/style.min.css" rel="stylesheet">
 
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com" rel="preconnect">
-  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Poppins:wght@300;400;500;600;700&family=Raleway:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 
-  <!-- Vendor CSS -->
-  <link href="public/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="public/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="public/assets/vendor/aos/aos.css" rel="stylesheet">
+    <style>
+        body {
+            background: #1a2035 url('https://images.unsplash.com/photo-1580060839134-75a5edca2e99?auto=format&fit=crop&w=1600&q=80') no-repeat center center fixed;
+            background-size: cover;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: rgba(20, 28, 48, 0.82);
+            z-index: 0;
+        }
+        .login-wrapper {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 420px;
+            padding: 16px;
+        }
+        .login-card {
+            background: #1d2537;
+            border-radius: 12px;
+            padding: 40px 36px 32px;
+            box-shadow: 0 20px 60px rgba(0,0,0,.5);
+            border: 1px solid rgba(255,255,255,.07);
+        }
+        .login-logo {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+        .login-logo .brand-icon {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, #348fe2, #00acac);
+            border-radius: 14px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: #fff;
+            margin-bottom: 14px;
+            box-shadow: 0 8px 24px rgba(52,143,226,.35);
+        }
+        .login-logo h4 {
+            color: #fff;
+            font-size: 22px;
+            font-weight: 700;
+            margin: 0 0 4px;
+            letter-spacing: .3px;
+        }
+        .login-logo p {
+            color: rgba(255,255,255,.45);
+            font-size: 13px;
+            margin: 0;
+        }
+        .login-card .form-group {
+            margin-bottom: 18px;
+        }
+        .login-card label {
+            color: rgba(255,255,255,.65);
+            font-size: 13px;
+            font-weight: 500;
+            margin-bottom: 7px;
+            display: block;
+        }
+        .login-card .input-group-text {
+            background: #252d42;
+            border: 1px solid rgba(255,255,255,.1);
+            border-right: none;
+            color: rgba(255,255,255,.4);
+        }
+        .login-card .form-control {
+            background: #252d42;
+            border: 1px solid rgba(255,255,255,.1);
+            border-left: none;
+            color: #fff;
+            font-size: 14px;
+            padding: 10px 14px;
+        }
+        .login-card .form-control::placeholder {
+            color: rgba(255,255,255,.25);
+        }
+        .login-card .form-control:focus {
+            background: #2c3654;
+            border-color: #348fe2;
+            box-shadow: none;
+            color: #fff;
+        }
+        .login-card .form-control:focus + .input-group-text,
+        .login-card .input-group:focus-within .input-group-text {
+            border-color: #348fe2;
+        }
+        .btn-login {
+            background: linear-gradient(135deg, #348fe2, #00acac);
+            border: none;
+            color: #fff;
+            font-weight: 600;
+            font-size: 14px;
+            padding: 12px;
+            border-radius: 8px;
+            width: 100%;
+            letter-spacing: .3px;
+            transition: opacity .2s;
+        }
+        .btn-login:hover {
+            opacity: .88;
+            color: #fff;
+        }
+        .login-divider {
+            border-color: rgba(255,255,255,.08);
+            margin: 22px 0;
+        }
+        .login-footer-link {
+            text-align: center;
+            font-size: 13px;
+            color: rgba(255,255,255,.4);
+            margin: 0;
+        }
+        .login-footer-link a {
+            color: #348fe2;
+            font-weight: 600;
+            text-decoration: none;
+        }
+        .login-footer-link a:hover { text-decoration: underline; }
+        .remember-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 22px;
+        }
+        .remember-row label {
+            color: rgba(255,255,255,.45);
+            font-size: 13px;
+            margin: 0;
+            cursor: pointer;
+        }
+        .remember-row a {
+            color: rgba(255,255,255,.45);
+            font-size: 13px;
+            text-decoration: none;
+        }
+        .remember-row a:hover { color: #348fe2; }
 
-  <!-- Main CSS -->
-  <link href="public/assets/css/main.css" rel="stylesheet">
+        /* Flash message */
+        .flash-msg {
+            border-radius: 8px;
+            font-size: 13px;
+            padding: 10px 14px;
+            margin-bottom: 18px;
+        }
+        .back-home {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .back-home a {
+            color: rgba(255,255,255,.3);
+            font-size: 12px;
+            text-decoration: none;
+        }
+        .back-home a:hover { color: rgba(255,255,255,.6); }
+    </style>
 </head>
 
-<body class="index-page">
+<body>
+    <div class="login-wrapper">
+        <div class="login-card">
 
-  <!-- HEADER -->
-  <header id="header" class="header d-flex align-items-center sticky-top">
-    <div class="container-fluid container-xl position-relative d-flex align-items-center">
-      <a href="index.php" class="logo d-flex align-items-center me-auto">
-        <h1 class="sitename">DakarStay</h1>
-      </a>
-      <nav id="navmenu" class="navmenu">
-        <ul>
-          <li><a href="index.php">Accueil</a></li>
-          <li><a href="index.php#logements">Logements</a></li>
-          <li><a href="index.php#excursions">Excursions</a></li>
-          <li><a href="index.php#contact">Contact</a></li>
-          <li><a href="login.php" class="active">Connexion</a></li>
-        </ul>
-        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-      </nav>
-      <a class="btn-getstarted" href="inscription.php">S'inscrire</a>
-    </div>
-  </header>
+            <!-- Logo -->
+            <div class="login-logo">
+                <div class="brand-icon">
+                    <i class="fa fa-house-chimney"></i>
+                </div>
+                <h4>DakarStay</h4>
+                <p>Connectez-vous à votre espace</p>
+            </div>
 
-  <main class="main">
-
-    <!-- Hero mini -->
-    <section class="hero section dark-background" style="min-height: 180px;">
-      <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=80" alt="" style="object-fit:cover;width:100%;height:100%;position:absolute;opacity:.4;">
-      <div class="container text-center position-relative py-5" data-aos="fade-up">
-        <h2 class="text-white">Connexion</h2>
-        <p class="text-white-50">Accédez à votre espace personnel DakarStay</p>
-      </div>
-    </section>
-
-    <!-- Formulaire de connexion -->
-    <section class="contact section light-background">
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
-        <div class="row justify-content-center">
-          <div class="col-lg-5 col-md-8">
-
-            <div class="card shadow-sm border-0 rounded-4 p-4 mt-4">
-
-              <!-- Flash message -->
-              <?php if (isset($_SESSION['message'])): ?>
-                <div class="alert alert-<?= $_SESSION['message_type'] === 'success' ? 'success' : ($_SESSION['message_type'] === 'warning' ? 'warning' : 'danger') ?> rounded-3">
-                  <?= htmlspecialchars($_SESSION['message']) ?>
+            <!-- Flash message -->
+            <?php if (isset($_SESSION['message'])): ?>
+                <?php
+                    $type = $_SESSION['message_type'] ?? 'info';
+                    $cls  = ['success'=>'success','error'=>'danger','warning'=>'warning'][$type] ?? 'info';
+                ?>
+                <div class="alert alert-<?= $cls ?> flash-msg">
+                    <i class="fa fa-circle-info me-1"></i>
+                    <?= htmlspecialchars($_SESSION['message']) ?>
                 </div>
                 <?php unset($_SESSION['message'], $_SESSION['message_type']); ?>
-              <?php endif; ?>
+            <?php endif; ?>
 
-              <form method="POST" action="controller/UserController.php">
+            <!-- Formulaire -->
+            <form method="POST" action="controller/UserController.php">
 
-                <div class="mb-3">
-                  <label for="email" class="form-label fw-semibold">Email</label>
-                  <div class="input-group">
-                    <span class="input-group-text"><i class="bi bi-envelope"></i></span>
-                    <input type="email" name="email" id="email" class="form-control" placeholder="exemple@email.com" required>
-                  </div>
+                <div class="form-group">
+                    <label>Adresse email</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fa fa-envelope"></i></span>
+                        <input type="email" name="email" class="form-control" placeholder="exemple@email.com" required autofocus>
+                    </div>
                 </div>
 
-                <div class="mb-3">
-                  <label for="password" class="form-label fw-semibold">Mot de passe</label>
-                  <div class="input-group">
-                    <span class="input-group-text"><i class="bi bi-lock"></i></span>
-                    <input type="password" name="password" id="password" class="form-control" placeholder="Votre mot de passe" required>
-                  </div>
+                <div class="form-group">
+                    <label>Mot de passe</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fa fa-lock"></i></span>
+                        <input type="password" name="password" id="password" class="form-control" placeholder="Votre mot de passe" required>
+                        <span class="input-group-text" style="border-left:none;cursor:pointer;" onclick="togglePwd()">
+                            <i class="fa fa-eye" id="eye-icon"></i>
+                        </span>
+                    </div>
                 </div>
 
-                <div class="form-check mb-3">
-                  <input class="form-check-input" type="checkbox" id="remember" name="remember">
-                  <label class="form-check-label text-muted" for="remember">Se souvenir de moi</label>
+                <div class="remember-row">
+                    <div class="form-check m-0">
+                        <input class="form-check-input" type="checkbox" name="remember" id="remember">
+                        <label class="form-check-label" for="remember">Se souvenir de moi</label>
+                    </div>
+                    <a href="#">Mot de passe oublié ?</a>
                 </div>
 
-                <div class="d-grid">
-                  <button type="submit" name="btnLogin" class="btn btn-primary btn-lg">
-                    <i class="bi bi-box-arrow-in-right me-2"></i>Se connecter
-                  </button>
-                </div>
+                <button type="submit" name="btnLogin" class="btn-login">
+                    <i class="fa fa-right-to-bracket me-2"></i>Se connecter
+                </button>
 
-              </form>
+            </form>
 
-              <hr class="my-4">
+            <hr class="login-divider">
 
-              <div class="text-center">
-                <p class="mb-1 text-muted">Pas encore de compte ?</p>
-                <a href="inscription.php" class="btn btn-outline-secondary w-100">
-                  <i class="bi bi-person-plus me-2"></i>Créer un compte
-                </a>
-              </div>
+            <p class="login-footer-link">
+                Pas encore de compte ? <a href="inscription.php">Créer un compte</a>
+            </p>
 
-              <div class="text-center mt-3">
-                <a href="index.php" class="text-muted small"><i class="bi bi-arrow-left me-1"></i>Retour à l'accueil</a>
-              </div>
-
-            </div>
-          </div>
         </div>
-      </div>
-    </section>
 
-  </main>
-
-  <!-- FOOTER simplifié -->
-  <footer id="footer" class="footer dark-background py-4">
-    <div class="container text-center">
-      <p class="mb-0">© DakarStay — <a href="index.php" class="text-white-50">Retour à l'accueil</a></p>
+        <div class="back-home">
+            <a href="index.php"><i class="fa fa-arrow-left me-1"></i>Retour à l'accueil</a>
+        </div>
     </div>
-  </footer>
 
-  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-  <div id="preloader"><div></div><div></div><div></div><div></div></div>
+    <!-- Admin template JS -->
+    <script src="public/templates/templateAdmin/assets/js/app.min.js"></script>
 
-  <!-- Vendor JS -->
-  <script src="public/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="public/assets/vendor/aos/aos.js"></script>
-  <script src="public/assets/js/main.js"></script>
-
+    <script>
+        function togglePwd() {
+            const input = document.getElementById('password');
+            const icon  = document.getElementById('eye-icon');
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.replace('fa-eye', 'fa-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.replace('fa-eye-slash', 'fa-eye');
+            }
+        }
+    </script>
 </body>
 </html>
