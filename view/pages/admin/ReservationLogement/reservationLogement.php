@@ -1,20 +1,25 @@
 <!DOCTYPE html>
 <html lang="fr">
 <body>
+
+    <!-- section Head -->
     <?php require_once("../../../sections/admin/head.php"); ?>
+
+
     <div id="page-loader" class="fade show"><span class="spinner"></span></div>
 
+
     <div id="page-container" class="fade page-sidebar-fixed page-header-fixed">
+
+        <!-- section Menu Haut -->
         <?php require_once("../../../sections/admin/menuHaut.php"); ?>
+
+        <!-- section Menu Gauche -->
         <?php require_once("../../../sections/admin/menuGauche.php"); ?>
 
+        <!-- section Content -->
         <div id="content" class="content">
-
-            <ol class="breadcrumb float-xl-right">
-                <li class="breadcrumb-item"><a href="#">Admin</a></li>
-                <li class="breadcrumb-item active">Réservations Logement</li>
-            </ol>
-
+            
             <h1 class="page-header">Réservations Logement <small>suivi des réservations</small></h1>
 
             <div class="panel panel-inverse">
@@ -50,7 +55,7 @@
                                 <td><span class="badge badge-success">confirmée</span></td>
                                 <td class="text-center">
                                     <a href="#modal-edit-rl" class="btn btn-xs btn-warning" data-toggle="modal" title="Modifier statut"><i class="fa fa-edit"></i></a>
-                                    <a href="#modal-delete-rl" class="btn btn-xs btn-danger" data-toggle="modal" title="Annuler"><i class="fa fa-times"></i></a>
+                                  
                                 </td>
                             </tr>
                             <tr>
@@ -62,7 +67,7 @@
                                 <td><span class="badge badge-warning">en attente</span></td>
                                 <td class="text-center">
                                     <a href="#modal-edit-rl" class="btn btn-xs btn-warning" data-toggle="modal" title="Modifier statut"><i class="fa fa-edit"></i></a>
-                                    <a href="#modal-delete-rl" class="btn btn-xs btn-danger" data-toggle="modal" title="Annuler"><i class="fa fa-times"></i></a>
+                                  
                                 </td>
                             </tr>
                             <tr>
@@ -74,7 +79,7 @@
                                 <td><span class="badge badge-danger">annulée</span></td>
                                 <td class="text-center">
                                     <a href="#modal-edit-rl" class="btn btn-xs btn-warning" data-toggle="modal" title="Modifier statut"><i class="fa fa-edit"></i></a>
-                                    <a href="#modal-delete-rl" class="btn btn-xs btn-danger" data-toggle="modal" title="Annuler"><i class="fa fa-times"></i></a>
+                                  
                                 </td>
                             </tr>
                             <tr>
@@ -86,7 +91,7 @@
                                 <td><span class="badge badge-success">confirmée</span></td>
                                 <td class="text-center">
                                     <a href="#modal-edit-rl" class="btn btn-xs btn-warning" data-toggle="modal" title="Modifier statut"><i class="fa fa-edit"></i></a>
-                                    <a href="#modal-delete-rl" class="btn btn-xs btn-danger" data-toggle="modal" title="Annuler"><i class="fa fa-times"></i></a>
+                                  
                                 </td>
                             </tr>
                         </tbody>
@@ -95,7 +100,10 @@
             </div>
         </div>
 
+        <!-- section config -->
         <?php require_once("../../../sections/admin/config.php"); ?>
+
+        <!-- section scroll top -->
         <?php require_once("../../../sections/admin/scroll.php"); ?>
     </div>
 
@@ -128,24 +136,7 @@
         </div>
     </div>
 
-    <!-- MODAL SUPPRIMER -->
-    <div class="modal fade" id="modal-delete-rl">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <div class="modal-header bg-danger text-white">
-                    <h4 class="modal-title"><i class="fa fa-times mr-2"></i>Annuler la réservation</h4>
-                    <button type="button" class="close text-white" data-dismiss="modal">×</button>
-                </div>
-                <div class="modal-body">
-                    <p>Confirmer l'annulation de cette réservation ?</p>
-                </div>
-                <div class="modal-footer">
-                    <a href="javascript:;" class="btn btn-white" data-dismiss="modal">Non</a>
-                    <a href="../../../../controller/ReservationLogementController.php?action=annuler&id=1" class="btn btn-danger">Oui, annuler</a>
-                </div>
-            </div>
-        </div>
-    </div>
+    
 
     <?php require_once("../../../sections/admin/script.php"); ?>
 </body>

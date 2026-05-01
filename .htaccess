@@ -1,20 +1,18 @@
 RewriteEngine On 
 
-
+# racine du projet
 RewriteRule ^admin$ admin.php
 RewriteRule ^home$ index.php
 
-
+# pages admin
 RewriteRule ^avis$ view/pages/admin/Avis/avis.php
-
 RewriteRule ^demande$ view/pages/admin/DemandeProprietaire/demandeProprietaire.php
-
 RewriteRule ^logement$ view/pages/admin/Logement/logement.php
-
 RewriteRule ^reservationLogement$ view/pages/admin/ReservationLogement/reservationLogement.php
-
- RewriteRule ^excursion$ view/pages/admin/Excursion/excursion.php
-
+RewriteRule ^excursion$ view/pages/admin/Excursion/excursion.php
 RewriteRule ^reservationExcursion$ view/pages/admin/ReservationExcursion/reservationExcursion.php
-
 RewriteRule ^utilisateur$ view/pages/admin/User/user.php
+
+# pages client
+RewriteRule ^listeExcursion$ view/pages/vitrine/listeExcursion/listeExcursion.php
+RewriteRule ^listeLogements$ view/pages/vitrine/listeLogements/listeLogements.php

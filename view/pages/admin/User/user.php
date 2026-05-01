@@ -1,15 +1,22 @@
 <!DOCTYPE html>
 <html lang="fr">
 <body>
+
+	<!-- section Head -->
 	<?php require_once("../../../sections/admin/head.php"); ?>
 
 	<div id="page-loader" class="fade show"><span class="spinner"></span></div>
 
 	<div id="page-container" class="fade page-sidebar-fixed page-header-fixed">
 
+		<!-- section Menu Haut -->
 		<?php require_once("../../../sections/admin/menuHaut.php"); ?>
+
+		<!-- section menu Gauche -->
 		<?php require_once("../../../sections/admin/menuGauche.php"); ?>
 
+
+		<!-- section Content -->
 		<div id="content" class="content">
 
 		
@@ -48,7 +55,7 @@
 								<td>admin@dakarstay.sn</td>
 								<td><span class="badge badge-danger">admin</span></td>
 								<td>
-									<a href="#" class="btn btn-xs btn-primary mr-1"><i class="fa fa-edit"></i></a>
+									
 									<a href="#" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>
 								</td>
 							</tr>
@@ -60,7 +67,7 @@
 								<td>mamadou@gmail.com</td>
 								<td><span class="badge badge-warning">propriétaire</span></td>
 								<td>
-									<a href="#" class="btn btn-xs btn-primary mr-1"><i class="fa fa-edit"></i></a>
+									
 									<a href="#" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>
 								</td>
 							</tr>
@@ -72,8 +79,8 @@
 								<td>fatou@gmail.com</td>
 								<td><span class="badge badge-success">client</span></td>
 								<td>
-									<a href="#" class="btn btn-xs btn-primary mr-1"><i class="fa fa-edit"></i></a>
-									<a href="#" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>
+									
+									<a href="#modal-delete-user" class="btn btn-xs btn-danger" data-toggle="modal"><i class="fa fa-trash"></i></a>
 								</td>
 							</tr>
 							<tr>
@@ -84,8 +91,8 @@
 								<td>ibrahima@gmail.com</td>
 								<td><span class="badge badge-success">client</span></td>
 								<td>
-									<a href="#" class="btn btn-xs btn-primary mr-1"><i class="fa fa-edit"></i></a>
-									<a href="#" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>
+									
+									<a href="#modal-delete-user" class="btn btn-xs btn-danger" data-toggle="modal"><i class="fa fa-trash"></i></a>
 								</td>
 							</tr>
 							<tr>
@@ -96,8 +103,8 @@
 								<td>aissatou@gmail.com</td>
 								<td><span class="badge badge-warning">propriétaire</span></td>
 								<td>
-									<a href="#" class="btn btn-xs btn-primary mr-1"><i class="fa fa-edit"></i></a>
-									<a href="#" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>
+									
+									<a href="#modal-delete-user" class="btn btn-xs btn-danger" data-toggle="modal"><i class="fa fa-trash"></i></a>
 								</td>
 							</tr>
 						</tbody>
@@ -107,11 +114,34 @@
 
 		</div>
 
+		<!-- MODAL SUPPRIMER -->
+    <div class="modal fade" id="modal-delete-user">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h4 class="modal-title"><i class="fa fa-times mr-2"></i>supprimer l'utilisateur</h4>
+                    <button type="button" class="close text-white" data-dismiss="modal">×</button>
+                </div>
+                <div class="modal-body">
+                    <p>Confirmer la suppression de cet utilisateur ?</p>
+                </div>
+                <div class="modal-footer">
+                    <a href="javascript:;" class="btn btn-white" data-dismiss="modal">Non</a>
+                    <a href="../../../../controller/UserController.php?action=supprimer&id=1" class="btn btn-danger">Oui, supprimer</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+		<!-- section config -->
 		<?php require_once("../../../sections/admin/config.php"); ?>
+
+		<!-- section scroll top -->
 		<?php require_once("../../../sections/admin/scroll.php"); ?>
 	</div>
 
-
+	<!-- section Script -->
 	<?php require_once("../../../sections/admin/script.php"); ?>
 </body>
 </html>

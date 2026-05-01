@@ -1,15 +1,21 @@
 <!DOCTYPE html>
 <html lang="fr">
 <body>
+
+	<!-- section Head -->
 	<?php require_once("../../../sections/admin/head.php"); ?>
 
 	<div id="page-loader" class="fade show"><span class="spinner"></span></div>
 
 	<div id="page-container" class="fade page-sidebar-fixed page-header-fixed">
 
+		<!-- section Menu Haut -->
 		<?php require_once("../../../sections/admin/menuHaut.php"); ?>
+
+		<!-- section menu Gauche -->
 		<?php require_once("../../../sections/admin/menuGauche.php"); ?>
 
+		<!-- section Content -->
 		<div id="content" class="content">
 
 			<ol class="breadcrumb float-xl-right">
@@ -18,7 +24,6 @@
 						<i class="fa fa-plus mr-1"></i> Ajouter une excursion
 					</a>
 				</li>
-				<li class="breadcrumb-item active">Excursions</li>
 			</ol>
 
 			<h1 class="page-header">Liste des excursions</h1>
@@ -107,7 +112,10 @@
 
 		</div>
 
+		<!-- section config -->
 		<?php require_once("../../../sections/admin/config.php"); ?>
+
+		<!-- section scroll top -->
 		<?php require_once("../../../sections/admin/scroll.php"); ?>
 	</div>
 
@@ -150,12 +158,6 @@
 									<input type="datetime-local" name="date" class="form-control" required>
 								</div>
 							</div>
-							<div class="col-md-6">
-								<div class="form-group">
-									<label>Organisateur (ID user)</label>
-									<input type="number" name="id_user" class="form-control" placeholder="ID de l'organisateur" required>
-								</div>
-							</div>
 						</div>
 						<div class="form-group">
 							<label>Image</label>
@@ -171,6 +173,7 @@
 		</div>
 	</div>
 
+	<!-- section Script -->
 	<?php require_once("../../../sections/admin/script.php"); ?>
 </body>
 </html>

@@ -1,13 +1,18 @@
 <!DOCTYPE html>
 <html lang="fr">
 <body>
+
+	<!-- section Head -->
 	<?php require_once("../../../sections/admin/head.php"); ?>
 
 	<div id="page-loader" class="fade show"><span class="spinner"></span></div>
 
 	<div id="page-container" class="fade page-sidebar-fixed page-header-fixed">
 
+		<!-- section Menu Haut -->
 		<?php require_once("../../../sections/admin/menuHaut.php"); ?>
+
+		<!-- section menu Gauche -->
 		<?php require_once("../../../sections/admin/menuGauche.php"); ?>
 
 		<!-- MODAL liste des logement  -->
@@ -19,7 +24,6 @@
 						<i class="fa fa-plus mr-1"></i> Ajouter un logement
 					</a>
 				</li>
-				<li class="breadcrumb-item active">Logements</li>
 			</ol>
 
 			<h1 class="page-header">Liste des logements</h1>
@@ -108,7 +112,10 @@
 
 		</div>
 
+		<!-- section config -->
 		<?php require_once("../../../sections/admin/config.php"); ?>
+
+		<!-- section scroll top -->
 		<?php require_once("../../../sections/admin/scroll.php"); ?>
 	</div>
 
@@ -176,6 +183,7 @@
 		</div>
 	</div>
 
+	<!-- section Script -->
 	<?php require_once("../../../sections/admin/script.php"); ?>
 </body>
 </html>

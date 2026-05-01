@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="fr">
 <body>
+
+    <!-- section Head -->
     <?php require_once("../../../sections/admin/head.php"); ?>
 
 
@@ -8,10 +10,14 @@
 
     <div id="page-container" class="fade page-sidebar-fixed page-header-fixed">
 
+
+        <!-- section Menu Haut -->
         <?php require_once("../../../sections/admin/menuHaut.php"); ?>
-		
+
+		<!-- section Menu Gauche -->
         <?php require_once("../../../sections/admin/menuGauche.php"); ?>
 
+        <!-- section Content -->
         <div id="content" class="content">
 
             <ol class="breadcrumb float-xl-right">
@@ -41,7 +47,7 @@
                                 <th>Commentaire</th>
                                 <th>Note</th>
                                 <th>Date</th>
-                                <th class="text-center" width="10%">Actions</th>
+                                
                             </tr>
                         </thead>
                         <tbody>
@@ -56,9 +62,7 @@
                                     </span> 5/5
                                 </td>
                                 <td>2024-01-20</td>
-                                <td class="text-center">
-                                    <a href="#modal-delete-avis" class="btn btn-xs btn-danger" data-toggle="modal" title="Supprimer"><i class="fa fa-trash"></i></a>
-                                </td>
+                                
                             </tr>
                             <tr>
                                 <td class="f-w-600 text-inverse">2</td>
@@ -71,9 +75,7 @@
                                     </span> 4/5
                                 </td>
                                 <td>2024-01-22</td>
-                                <td class="text-center">
-                                    <a href="#modal-delete-avis" class="btn btn-xs btn-danger" data-toggle="modal" title="Supprimer"><i class="fa fa-trash"></i></a>
-                                </td>
+                                
                             </tr>
                             <tr>
                                 <td class="f-w-600 text-inverse">3</td>
@@ -86,9 +88,7 @@
                                     </span> 3/5
                                 </td>
                                 <td>2024-01-25</td>
-                                <td class="text-center">
-                                    <a href="#modal-delete-avis" class="btn btn-xs btn-danger" data-toggle="modal" title="Supprimer"><i class="fa fa-trash"></i></a>
-                                </td>
+                                
                             </tr>
                             <tr>
                                 <td class="f-w-600 text-inverse">4</td>
@@ -101,9 +101,7 @@
                                     </span> 5/5
                                 </td>
                                 <td>2024-01-28</td>
-                                <td class="text-center">
-                                    <a href="#modal-delete-avis" class="btn btn-xs btn-danger" data-toggle="modal" title="Supprimer"><i class="fa fa-trash"></i></a>
-                                </td>
+                                
                             </tr>
                         </tbody>
                     </table>
@@ -111,29 +109,15 @@
             </div>
         </div>
 
+        <!-- section config -->
         <?php require_once("../../../sections/admin/config.php"); ?>
+
+        <!-- section Scroll top -->
         <?php require_once("../../../sections/admin/scroll.php"); ?>
     </div>
 
-    <!-- MODAL SUPPRIMER -->
-    <div class="modal fade" id="modal-delete-avis">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <div class="modal-header bg-danger text-white">
-                    <h4 class="modal-title"><i class="fa fa-trash mr-2"></i>Supprimer l'avis</h4>
-                    <button type="button" class="close text-white" data-dismiss="modal">×</button>
-                </div>
-                <div class="modal-body">
-                    <p>Confirmer la suppression de cet avis ? Cette action est irréversible.</p>
-                </div>
-                <div class="modal-footer">
-                    <a href="javascript:;" class="btn btn-white" data-dismiss="modal">Annuler</a>
-                    <a href="../../../../controller/AvisController.php?action=supprimer&id=1" class="btn btn-danger">Supprimer</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
+    
+         <!-- section Script -->
     <?php require_once("../../../sections/admin/script.php"); ?>
 </body>
 </html>
