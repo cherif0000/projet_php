@@ -1,39 +1,47 @@
 <?php
-/**
- * Database - Connexion à la base de données
- * Pattern Singleton : une seule connexion partagée
- */
+
 class Database {
     private static $instance = null;
 
-    private string $host     = 'localhost';
-    private string $dbname   = 'php_projet';
-    private string $user     = 'root';
-    private string $password = ''; 
-
-    private PDO $pdo;
+    private  $host;
+    private  $dbname;
+    private  $user;
+    private  $password;
+    private  $db; 
 
     private function __construct() {
-        try {
-            $this->pdo = new PDO(
-                "mysql:host={$this->host};dbname={$this->dbname};charset=utf8",
-                $this->user,
-                $this->password,
-                [
-                    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
-                    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-                ]
-            );
-        } catch (PDOException $e) {
-            die("❌ Erreur de connexion : " . $e->getMessage());
-        }
+        
+            $this->host = gotenv('DB_HOST') ?: 'localhost';
+            $this->dbname = gotenv('DB_NAME') ?: 'php_projet';
+            $this->user = gotenv('DB_USER') ?: 'root';
+            $this->password = gotenv('DB_PASSWORD') ?: '';
+            $this->getConnexion();
+       
     }
 
-    // Retourne toujours la même instance
-    public static function getInstance(): PDO {
-        if (self::$instance === null) {
-            self::$instance = new Database();
+    private function getConnexion() 
+    {
+        $dsn = "mysql:host={$this->host};dbname={$this->dbname}";
+        try {
+            $this->db = new PDO($dsn, $this->user, $this->password);
+            $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        } catch (PDOException $error) {
+            $this-> handleError($error);
         }
-        return self::$instance->pdo;
+
+        return $this->db;
     }
+ 
+    private function handleError(PDOeXEPTION $error) {
+        error_log("erreur de connection a la BD. " . $error->getMessage());
+        die("erreur s'est produite lors de la connection a la base de données.");
+     }
+       
+
+
+
 }
+
+?>
+
+
