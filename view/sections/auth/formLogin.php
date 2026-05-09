@@ -14,16 +14,16 @@
 
 		<!-- Form -->
 		<div class="login-content">
-			<form action="admin" id="loginForm" method="POST" class="margin-bottom-0">
+			<form action="userController" id="loginForm" method="POST" class="margin-bottom-0">
 				
 				<div class="form-group m-b-20">
-					<input type="email" id="email" class="form-control form-control-lg" placeholder="Adresse email" required />
-					<p id="error-message"></p>
+					<input type="email" id="email" name="email" class="form-control form-control-lg" placeholder="Adresse email" required />
+					<p id="error-email"></p>
 				</div>
 				
 				<div class="form-group m-b-20">
-					<input type="password" id="password" class="form-control form-control-lg" placeholder="Mot de passe" required />
-					<p id="error-message"></p>
+					<input type="password" id="password" name="password" class="form-control form-control-lg" placeholder="Mot de passe" required />
+					<p id="error-password"></p>
 				</div>
 
 				<div class="checkbox checkbox-css m-b-20">

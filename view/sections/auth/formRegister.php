@@ -14,22 +14,26 @@
 
 	<!-- Form -->
 	<div class="login-content">
-		<form action="register-process.html" method="POST" class="margin-bottom-0">
+		<form action="userController" id="registerForm" method="POST" class="margin-bottom-0">
 			
 			<div class="form-group m-b-20">
-				<input type="text" class="form-control form-control-lg" placeholder="Nom complet" required />
+				<input type="text" id="nom" name="nom" class="form-control form-control-lg" placeholder="Nom complet" required />
+				<p id="error-nom"></p>
 			</div>
 
 			<div class="form-group m-b-20">
-				<input type="email" class="form-control form-control-lg" placeholder="Adresse email" required />
+				<input type="email" id="email" name="email" class="form-control form-control-lg" placeholder="Adresse email" required />
+				<p id="error-email"></p>
 			</div>
 			
 			<div class="form-group m-b-20">
-				<input type="password" class="form-control form-control-lg" placeholder="Mot de passe" required />
+				<input type="password" id="password" name="password" class="form-control form-control-lg" placeholder="Mot de passe" required />
+				<p id="error-password"></p>
 			</div>
 
 			<div class="form-group m-b-20">
-				<input type="password" class="form-control form-control-lg" placeholder="Confirmer le mot de passe" required />
+				<input type="password" id="confirmPassword" name="confirmPassword" class="form-control form-control-lg" placeholder="Confirmer le mot de passe" required />
+				<p id="error-confirmPassword"></p>
 			</div>
 
 			<div class="checkbox checkbox-css m-b-20">
@@ -40,14 +44,14 @@
 			</div>
 
 			<div class="login-buttons">
-				<button type="submit" class="btn btn-success btn-block btn-lg">
+				<button type="submit" id="btnSubmit" class="btn btn-success btn-block btn-lg" name="frmRegister">
 					S'inscrire
 				</button>
 			</div>
 
 			<div class="m-t-20 text-center">
 				Déjà un compte ? 
-				<a href="login.php"><b>Se connecter</b></a>
+				<a href="login"><b>Se connecter</b></a>
 			</div>
 
 		</form>

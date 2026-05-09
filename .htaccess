@@ -3,6 +3,11 @@ RewriteEngine On
 # racine du projet
 RewriteRule ^admin$ admin.php
 RewriteRule ^home$ index.php
+RewriteRule ^login$ login.php
+RewriteRule ^inscription$ inscription.php
+RewriteRule ^dashboard$ dashboard.php
+
+
 
 # pages admin
 RewriteRule ^avis$ view/pages/admin/Avis/avis.php
@@ -16,3 +21,21 @@ RewriteRule ^utilisateur$ view/pages/admin/User/user.php
 # pages client
 RewriteRule ^listeExcursion$ view/pages/vitrine/listeExcursion/listeExcursion.php
 RewriteRule ^listeLogements$ view/pages/vitrine/listeLogements/listeLogements.php
+
+
+# controller 
+RewriteRule ^userController$ controller/UserController.php
+RewriteRule ^excursionController$ controller/ExcursionController.php
+RewriteRule ^logementController$ controller/LogementController.php
+RewriteRule ^reservationLogementController$ controller/ReservationLogementController.php
+RewriteRule ^reservationExcursionController$ controller/ReservationExcursionController.php
+RewriteRule ^avisController$ controller/AvisController.php
+RewriteRule ^demandeController$ controller/DemandeProprietaireController.php
+
+# model 
+RewriteRule ^userDB$ model/UserDB.php
+RewriteRule ^excursionDB$ model/ExcursionDB.php
+RewriteRule ^logementDB$ model/LogementDB.php
+RewriteRule ^reservationLogementDB$ model/ReservationLogementDB.php
+RewriteRule ^reservationExcursionDB$ model/ReservationExcursionDB.php
+RewriteRule ^avisDB$ model/AvisDB.php

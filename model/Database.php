@@ -7,14 +7,14 @@ class Database {
     private  $dbname;
     private  $user;
     private  $password;
-    private  $db; 
+    protected $pdo; 
 
-    private function __construct() {
+    public function __construct() {
         
-            $this->host = gotenv('DB_HOST') ?: 'localhost';
-            $this->dbname = gotenv('DB_NAME') ?: 'php_projet';
-            $this->user = gotenv('DB_USER') ?: 'root';
-            $this->password = gotenv('DB_PASSWORD') ?: '';
+            $this->host = getenv('DB_HOST') ?: 'localhost';
+            $this->dbname = getenv('DB_NAME') ?: 'php_projet';
+            $this->user = getenv('DB_USER') ?: 'root';
+            $this->password = getenv('DB_PASSWORD') ?: '';
             $this->getConnexion();
        
     }
@@ -23,16 +23,16 @@ class Database {
     {
         $dsn = "mysql:host={$this->host};dbname={$this->dbname}";
         try {
-            $this->db = new PDO($dsn, $this->user, $this->password);
-            $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $this->pdo = new PDO($dsn, $this->user, $this->password);
+            $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $error) {
             $this-> handleError($error);
         }
 
-        return $this->db;
+        return $this->pdo;
     }
  
-    private function handleError(PDOeXEPTION $error) {
+    private function handleError(PDOException $error) {
         error_log("erreur de connection a la BD. " . $error->getMessage());
         die("erreur s'est produite lors de la connection a la base de données.");
      }
@@ -43,5 +43,3 @@ class Database {
 }
 
 ?>
-
-

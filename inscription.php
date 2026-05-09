@@ -24,7 +24,6 @@
         <!-- section form -->
         <?php require_once("view/sections/auth/formRegister.php"); ?>
         
-
         <!-- section Scroll top -->
         <?php require_once("view/sections/auth/scrollTop.php"); ?>
 
@@ -34,11 +33,38 @@
 <!-- section script -->
     <script src="public/templates/templateAdmin/assets/js/app.min.js"></script>
     <script src="public/templates/templateAdmin/assets/js/theme/default.min.js"></script>
-    <script src="public/js/inscription.js"></script>
-    <script src="public/js/Validator.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="public/js/Validator.js"></script>
+    <script src="public/js/inscription.js"></script>
 
 
+<!-- message d'erreur -->
+    <?php if (isset($_GET['error']) && $_GET['error'] == 1 && isset($_GET['message'])): ?>
+        <script>
+    Swal.fire({
+        icon: 'error',
+        title: '<?php echo htmlspecialchars(urldecode($_GET['title']), ENT_QUOTES, 'UTF-8'); ?>',
+        text: '<?php echo htmlspecialchars(urldecode($_GET['message']), ENT_QUOTES, 'UTF-8'); ?>',
+        timer: 1000,
+        showConfirmButton: false,
+        timerProgressBar: true
+    });
+</script>
+    <?php endif; ?>
+
+<!-- message success -->
+    <?php if (isset($_GET['Success']) && $_GET['Success'] == 1 && isset($_GET['message'])): ?>
+       <script>
+    Swal.fire({
+        icon: 'success',
+        title: '<?php echo htmlspecialchars(urldecode($_GET['title']), ENT_QUOTES, 'UTF-8'); ?>',
+        text: '<?php echo htmlspecialchars(urldecode($_GET['message']), ENT_QUOTES, 'UTF-8'); ?>',
+        timer: 1000,
+        showConfirmButton: false,
+        timerProgressBar: true
+    });
+</script>
+    <?php endif; ?>
 
 
 </body>

@@ -11,10 +11,10 @@ class UserDB extends Database {
         $stmt = $this->pdo->prepare($sql);
 
         return $stmt->execute([
-            ':nom' => $nom,
-            ':email' => $email,
+            ':nom'      => $nom,
+            ':email'    => $email,
             ':password' => password_hash($password, PASSWORD_BCRYPT),
-            ':role' => $role
+            ':role'     => $role
         ]);
     }
 
@@ -34,7 +34,20 @@ class UserDB extends Database {
             return false;
 
         } catch (PDOException $error) {
-            error_log("Erreur lors de la connection " . $error->getMessage());
+            error_log("Erreur lors de la connexion : " . $error->getMessage());
+            return false;
+        }
+    }
+
+    // VÉRIFIER SI EMAIL EXISTE DÉJÀ
+    public function emailExists($email) {
+        $sql = "SELECT COUNT(*) FROM Utilisateur WHERE email = :email";
+        try {
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute([':email' => $email]);
+            return $stmt->fetchColumn() > 0;
+        } catch (PDOException $error) {
+            error_log("Erreur emailExists : " . $error->getMessage());
             return false;
         }
     }

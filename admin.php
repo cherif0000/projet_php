@@ -30,5 +30,33 @@
 	
 	<!-- ================== SCRIPT ================== -->
     <?php require_once("view/sections/admin/script.php"); ?>	
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+<!-- message d'erreur -->
+    <?php if (isset($_GET['error']) && $_GET['error'] == 1 && isset($_GET['message'])): ?>
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Erreur de connexion',
+                text: '<?php echo htmlspecialchars(urldecode($_GET['message']), ENT_QUOTES, 'UTF-8'); ?>',
+               
+            });
+        </script>
+    <?php endif; ?>
+
+<!-- message success -->
+    <?php if (isset($_GET['Success']) && $_GET['Success'] == 1 && isset($_GET['message'])): ?>
+        <script>
+			Swal.fire({
+				icon: 'success',
+				title: '<?php echo htmlspecialchars(urldecode($_GET['title']), ENT_QUOTES, 'UTF-8'); ?>',
+				text: '<?php echo htmlspecialchars(urldecode($_GET['message']), ENT_QUOTES, 'UTF-8'); ?>',
+				timer: 1000,
+				timerProgressBar: true,
+				showConfirmButton: false
+			});
+		</script>
+    <?php endif; ?>
 </body>
 </html>

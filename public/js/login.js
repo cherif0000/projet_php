@@ -25,10 +25,12 @@ emailInput.addEventListener('input', () => {
     showError(emailInput, error ? error.message : '');
 });
 
+
+
 // PASSWORD
 passwordInput.addEventListener('input', () => {
     const password = passwordInput.value;
-    const error = Validator.passwordValidator("Mot de passe", password, 6);
+    const error = Validator.passwordValidator("Mot de passe", password, 8);
 
     showError(passwordInput, error ? error.message : '');
     toggleButton();
@@ -37,25 +39,7 @@ passwordInput.addEventListener('input', () => {
 // ACTIVER BOUTON
 function toggleButton() {
     const emailValid = !Validator.emailValidator("Email", emailInput.value.trim());
-    const passwordValid = !Validator.passwordValidator("Mot de passe", passwordInput.value, 6);
+    const passwordValid = !Validator.passwordValidator("Mot de passe", passwordInput.value, 8);
 
     btnSubmit.disabled = !(emailValid && passwordValid);
 }
-
-
-// affiche message reuissi ou erreur avant redirection
-
-document.getElementById('loginForm').addEventListener('submit', (event) => {
-    Swal.fire({
-        title: 'Succès',
-        text: 'Connexion réussie',
-        icon: 'success',
-        timer: 1000,
-        showConfirmButton: false
-    });
-
-    // laisser le formulaire continuer après 1s
-    setTimeout(() => {
-        event.target.submit();
-    }, 1000);
-});
