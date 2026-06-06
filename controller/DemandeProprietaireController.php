@@ -16,7 +16,6 @@ if (isset($_GET['action']) && isset($_GET['id'])) {
         // Passe l'utilisateur en rôle propriétaire
         if ($user_id) {
             $sql = "UPDATE Utilisateur SET role = 'proprietaire' WHERE id = :id";
-            // On réutilise la connexion PDO via une petite méthode inline
             $db = new DemandeProprietaireDB();
             $db->execSQL($sql, [':id' => $user_id]);
         }

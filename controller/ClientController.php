@@ -10,9 +10,7 @@ require_once("../model/ReservationExcursionDB.php");
 
 $action = $_GET['action'] ?? '';
 
-// ─────────────────────────────────────────────
 // RÉSERVER UN LOGEMENT
-// ─────────────────────────────────────────────
 if ($action === 'reserverLogement' && $_SERVER['REQUEST_METHOD'] === 'POST') {
     $logement_id = (int)($_POST['logement_id'] ?? 0);
     $date_debut  = trim($_POST['date_debut']  ?? '');
@@ -33,9 +31,7 @@ if ($action === 'reserverLogement' && $_SERVER['REQUEST_METHOD'] === 'POST') {
     exit;
 }
 
-// ─────────────────────────────────────────────
 // RÉSERVER UNE EXCURSION
-// ─────────────────────────────────────────────
 if ($action === 'reserverExcursion' && $_SERVER['REQUEST_METHOD'] === 'POST') {
     $excursion_id    = (int)($_POST['excursion_id']    ?? 0);
     $nombre_personne = (int)($_POST['nombre_personne'] ?? 0);

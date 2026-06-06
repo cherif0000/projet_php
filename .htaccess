@@ -28,7 +28,7 @@ RewriteRule ^listeLogements$ view/pages/vitrine/listeLogements/listeLogements.ph
 
 
 # controller 
-RewriteRule ^userController$ controller/UserController.php
+RewriteRule ^userController$ controller/userController.php
 RewriteRule ^excursionController$ controller/ExcursionController.php
 RewriteRule ^logementController$ controller/LogementController.php
 RewriteRule ^reservationLogementController$ controller/ReservationLogementController.php
