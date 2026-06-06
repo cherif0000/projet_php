@@ -1,49 +1,48 @@
-RewriteEngine On 
+Options -Indexes
+RewriteEngine On
+RewriteBase /
 
 # racine du projet
-RewriteRule ^admin$ admin.php
-RewriteRule ^home$ index.php
-RewriteRule ^login$ login.php
-RewriteRule ^inscription$ inscription.php
-RewriteRule ^dashboard$ dashboard.php
-
-
+RewriteRule ^admin$ admin.php [L]
+RewriteRule ^home$ index.php [L]
+RewriteRule ^login$ login.php [L]
+RewriteRule ^inscription$ inscription.php [L]
+RewriteRule ^dashboard$ dashboard.php [L]
 
 # pages admin
-RewriteRule ^avis$ view/pages/admin/Avis/avis.php
-RewriteRule ^demande$ view/pages/admin/DemandeProprietaire/demandeProprietaire.php
-RewriteRule ^logement$ view/pages/admin/Logement/logement.php
-RewriteRule ^reservationLogement$ view/pages/admin/ReservationLogement/reservationLogement.php
-RewriteRule ^excursion$ view/pages/admin/Excursion/excursion.php
-RewriteRule ^reservationExcursion$ view/pages/admin/ReservationExcursion/reservationExcursion.php
-RewriteRule ^utilisateur$ view/pages/admin/User/user.php
+RewriteRule ^avis$ view/pages/admin/Avis/avis.php [L]
+RewriteRule ^demande$ view/pages/admin/DemandeProprietaire/demandeProprietaire.php [L]
+RewriteRule ^logement$ view/pages/admin/Logement/logement.php [L]
+RewriteRule ^reservationLogement$ view/pages/admin/ReservationLogement/reservationLogement.php [L]
+RewriteRule ^excursion$ view/pages/admin/Excursion/excursion.php [L]
+RewriteRule ^reservationExcursion$ view/pages/admin/ReservationExcursion/reservationExcursion.php [L]
+RewriteRule ^utilisateur$ view/pages/admin/User/user.php [L]
 
 # pages client
-RewriteRule ^listeExcursion$ view/pages/vitrine/listeExcursion/listeExcursion.php
-RewriteRule ^listeLogements$ view/pages/vitrine/listeLogements/listeLogements.php
+RewriteRule ^listeExcursion$ view/pages/vitrine/listeExcursion/listeExcursion.php [L]
+RewriteRule ^listeLogements$ view/pages/vitrine/listeLogements/listeLogements.php [L]
 
+# controllers
+RewriteRule ^userController$ controller/UserController.php [L]
+RewriteRule ^excursionController$ controller/ExcursionController.php [L]
+RewriteRule ^logementController$ controller/LogementController.php [L]
+RewriteRule ^reservationLogementController$ controller/ReservationLogementController.php [L]
+RewriteRule ^reservationExcursionController$ controller/ReservationExcursionController.php [L]
+RewriteRule ^avisController$ controller/AvisController.php [L]
+RewriteRule ^demandeController$ controller/DemandeProprietaireController.php [L]
 
-# controller 
-RewriteRule ^userController$ controller/UserController.php
-RewriteRule ^excursionController$ controller/ExcursionController.php
-RewriteRule ^logementController$ controller/LogementController.php
-RewriteRule ^reservationLogementController$ controller/ReservationLogementController.php
-RewriteRule ^reservationExcursionController$ controller/ReservationExcursionController.php
-RewriteRule ^avisController$ controller/AvisController.php
-RewriteRule ^demandeController$ controller/DemandeProprietaireController.php
+# models
+RewriteRule ^userDB$ model/UserDB.php [L]
+RewriteRule ^excursionDB$ model/ExcursionDB.php [L]
+RewriteRule ^logementDB$ model/LogementDB.php [L]
+RewriteRule ^reservationLogementDB$ model/ReservationLogementDB.php [L]
+RewriteRule ^reservationExcursionDB$ model/ReservationExcursionDB.php [L]
+RewriteRule ^avisDB$ model/AvisDB.php [L]
 
-# model 
-RewriteRule ^userDB$ model/UserDB.php
-RewriteRule ^excursionDB$ model/ExcursionDB.php
-RewriteRule ^logementDB$ model/LogementDB.php
-RewriteRule ^reservationLogementDB$ model/ReservationLogementDB.php
-RewriteRule ^reservationExcursionDB$ model/ReservationExcursionDB.php
-RewriteRule ^avisDB$ model/AvisDB.php
 # pages client détail
-RewriteRule ^logementDetail$ view/pages/client/logementDetail.php
-RewriteRule ^excursionDetail$ view/pages/client/excursionDetail.php
+RewriteRule ^logementDetail$ view/pages/client/logementDetail.php [L]
+RewriteRule ^excursionDetail$ view/pages/client/excursionDetail.php [L]
 
-# controller client
-RewriteRule ^clientController$ controller/ClientController.php
-
-RewriteRule ^demandeClientController$ controller/DemandeClientController.php
+# controllers client
+RewriteRule ^clientController$ controller/ClientController.php [L]
+RewriteRule ^demandeClientController$ controller/DemandeClientController.php [L]
