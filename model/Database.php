@@ -10,10 +10,10 @@ class Database {
     protected $pdo; 
  
     public function __construct() {
-        $this->host     = getenv('DB_HOST')     ?: 'localhost';
-        $this->dbname   = getenv('DB_NAME')     ?: 'php_projet';
-        $this->user     = getenv('DB_USER')     ?: 'root';
-        $this->password = getenv('DB_PASSWORD') ?: '';
+        $this->host     = getenv('DB_HOST')     ?: 'sql7.freesqldatabase.com';
+        $this->dbname   = getenv('DB_NAME')     ?: 'sql7829523';
+        $this->user     = getenv('DB_USER')     ?: 'sql7829523';
+        $this->password = getenv('DB_PASSWORD') ?: 'VwkvifRlnD';
         $this->port     = getenv('DB_PORT')     ?: '3306';
         $this->getConnexion();
     }
