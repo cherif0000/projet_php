@@ -1,45 +1,40 @@
 <?php
-
+ 
 class Database {
-    private static $instance = null;
-
-    private  $host;
-    private  $dbname;
-    private  $user;
-    private  $password;
+ 
+    private $host;
+    private $dbname;
+    private $user;
+    private $password;
+    private $port;
     protected $pdo; 
-
+ 
     public function __construct() {
-        
-            $this->host = getenv('DB_HOST') ?: 'localhost';
-            $this->dbname = getenv('DB_NAME') ?: 'php_projet';
-            $this->user = getenv('DB_USER') ?: 'root';
-            $this->password = getenv('DB_PASSWORD') ?: '';
-            $this->getConnexion();
-       
+        $this->host     = getenv('DB_HOST')     ?: 'localhost';
+        $this->dbname   = getenv('DB_NAME')     ?: 'php_projet';
+        $this->user     = getenv('DB_USER')     ?: 'root';
+        $this->password = getenv('DB_PASSWORD') ?: '';
+        $this->port     = getenv('DB_PORT')     ?: '3306';
+        $this->getConnexion();
     }
-
-    private function getConnexion() 
-    {
-        $dsn = "mysql:host={$this->host};dbname={$this->dbname}";
+ 
+    private function getConnexion() {
+        $dsn = "mysql:host={$this->host};port={$this->port};dbname={$this->dbname};charset=utf8";
         try {
             $this->pdo = new PDO($dsn, $this->user, $this->password);
             $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $error) {
-            $this-> handleError($error);
+            $this->handleError($error);
         }
-
+ 
         return $this->pdo;
     }
  
     private function handleError(PDOException $error) {
-        error_log("erreur de connection a la BD. " . $error->getMessage());
-        die("erreur s'est produite lors de la connection a la base de données.");
-     }
-       
-
-
-
+        error_log("Erreur de connexion à la BD : " . $error->getMessage());
+        die("Une erreur s'est produite lors de la connexion à la base de données.");
+    }
+ 
     // Méthode utilitaire pour exécuter des requêtes directes
     public function execSQL($sql, $params = []) {
         try {
@@ -50,8 +45,6 @@ class Database {
             return false;
         }
     }
-
-
 }
-
+ 
 ?>
