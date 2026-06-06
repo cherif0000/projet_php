@@ -1,3 +1,11 @@
+<?php
+session_start();
+if (!isset($_SESSION['id'])) { header("Location: login"); exit; }
+// Récupération des vrais utilisateurs depuis la base de données
+require_once("../../../../model/UserDB.php");
+$userDB = new UserDB();
+$users  = $userDB->getAllUsers();
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <body>
@@ -15,11 +23,8 @@
 		<!-- section menu Gauche -->
 		<?php require_once("../../../sections/admin/menuGauche.php"); ?>
 
-
 		<!-- section Content -->
 		<div id="content" class="content">
-
-		
 
 			<h1 class="page-header">Liste des utilisateurs</h1>
 
@@ -38,7 +43,6 @@
 						<thead>
 							<tr>
 								<th width="1%">#</th>
-								<th width="1%"></th>
 								<th>ID</th>
 								<th>Nom</th>
 								<th>Email</th>
@@ -47,92 +51,66 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<td class="f-w-600 text-inverse">1</td>
-								<td><img src="../../../../public/templates/templateAdmin/assets/img/user/user-1.jpg" class="img-rounded height-30" /></td>
-								<td>1</td>
-								<td>Admin DakarStay</td>
-								<td>admin@dakarstay.sn</td>
-								<td><span class="badge badge-danger">admin</span></td>
-								<td>
-									
-									<a href="#" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>
-								</td>
-							</tr>
-							<tr>
-								<td class="f-w-600 text-inverse">2</td>
-								<td><img src="../../../../public/templates/templateAdmin/assets/img/user/user-2.jpg" class="img-rounded height-30" /></td>
-								<td>2</td>
-								<td>Mamadou Diallo</td>
-								<td>mamadou@gmail.com</td>
-								<td><span class="badge badge-warning">propriétaire</span></td>
-								<td>
-									
-									<a href="#" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>
-								</td>
-							</tr>
-							<tr>
-								<td class="f-w-600 text-inverse">3</td>
-								<td><img src="../../../../public/templates/templateAdmin/assets/img/user/user-3.jpg" class="img-rounded height-30" /></td>
-								<td>3</td>
-								<td>Fatou Ndiaye</td>
-								<td>fatou@gmail.com</td>
-								<td><span class="badge badge-success">client</span></td>
-								<td>
-									
-									<a href="#modal-delete-user" class="btn btn-xs btn-danger" data-toggle="modal"><i class="fa fa-trash"></i></a>
-								</td>
-							</tr>
-							<tr>
-								<td class="f-w-600 text-inverse">4</td>
-								<td><img src="../../../../public/templates/templateAdmin/assets/img/user/user-4.jpg" class="img-rounded height-30" /></td>
-								<td>4</td>
-								<td>Ibrahima Sow</td>
-								<td>ibrahima@gmail.com</td>
-								<td><span class="badge badge-success">client</span></td>
-								<td>
-									
-									<a href="#modal-delete-user" class="btn btn-xs btn-danger" data-toggle="modal"><i class="fa fa-trash"></i></a>
-								</td>
-							</tr>
-							<tr>
-								<td class="f-w-600 text-inverse">5</td>
-								<td><img src="../../../../public/templates/templateAdmin/assets/img/user/user-5.jpg" class="img-rounded height-30" /></td>
-								<td>5</td>
-								<td>Aissatou Ba</td>
-								<td>aissatou@gmail.com</td>
-								<td><span class="badge badge-warning">propriétaire</span></td>
-								<td>
-									
-									<a href="#modal-delete-user" class="btn btn-xs btn-danger" data-toggle="modal"><i class="fa fa-trash"></i></a>
-								</td>
-							</tr>
+							<?php if (empty($users)): ?>
+								<tr>
+									<td colspan="6" class="text-center text-muted">Aucun utilisateur trouvé.</td>
+								</tr>
+							<?php else: ?>
+								<?php foreach ($users as $index => $user): ?>
+									<?php
+										// Couleur du badge selon le rôle
+										$badgeClass = 'badge-success'; // client par défaut
+										if ($user['role'] === 'admin')         $badgeClass = 'badge-danger';
+										elseif ($user['role'] === 'proprietaire') $badgeClass = 'badge-warning';
+									?>
+									<tr>
+										<td class="f-w-600 text-inverse"><?= $index + 1 ?></td>
+										<td><?= htmlspecialchars($user['id']) ?></td>
+										<td><?= htmlspecialchars($user['nom']) ?></td>
+										<td><?= htmlspecialchars($user['email']) ?></td>
+										<td>
+											<span class="badge <?= $badgeClass ?>">
+												<?= htmlspecialchars($user['role']) ?>
+											</span>
+										</td>
+										<td>
+											<a href="#modal-delete-user-<?= $user['id'] ?>"
+											   class="btn btn-xs btn-danger"
+											   data-toggle="modal">
+												<i class="fa fa-trash"></i>
+											</a>
+										</td>
+									</tr>
+
+									<!-- MODAL SUPPRIMER pour cet utilisateur -->
+									<div class="modal fade" id="modal-delete-user-<?= $user['id'] ?>">
+										<div class="modal-dialog modal-sm">
+											<div class="modal-content">
+												<div class="modal-header bg-danger text-white">
+													<h4 class="modal-title"><i class="fa fa-times mr-2"></i>Supprimer l'utilisateur</h4>
+													<button type="button" class="close text-white" data-dismiss="modal">×</button>
+												</div>
+												<div class="modal-body">
+													<p>Confirmer la suppression de <strong><?= htmlspecialchars($user['nom']) ?></strong> ?</p>
+												</div>
+												<div class="modal-footer">
+													<a href="javascript:;" class="btn btn-white" data-dismiss="modal">Non</a>
+													<a href="userController?action=supprimer&id=<?= $user['id'] ?>"
+													   class="btn btn-danger">Oui, supprimer</a>
+												</div>
+											</div>
+										</div>
+									</div>
+									<!-- FIN MODAL -->
+
+								<?php endforeach; ?>
+							<?php endif; ?>
 						</tbody>
 					</table>
 				</div>
 			</div>
 
 		</div>
-
-		<!-- MODAL SUPPRIMER -->
-    <div class="modal fade" id="modal-delete-user">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <div class="modal-header bg-danger text-white">
-                    <h4 class="modal-title"><i class="fa fa-times mr-2"></i>supprimer l'utilisateur</h4>
-                    <button type="button" class="close text-white" data-dismiss="modal">×</button>
-                </div>
-                <div class="modal-body">
-                    <p>Confirmer la suppression de cet utilisateur ?</p>
-                </div>
-                <div class="modal-footer">
-                    <a href="javascript:;" class="btn btn-white" data-dismiss="modal">Non</a>
-                    <a href="../../../../controller/UserController.php?action=supprimer&id=1" class="btn btn-danger">Oui, supprimer</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
 
 		<!-- section config -->
 		<?php require_once("../../../sections/admin/config.php"); ?>
@@ -143,5 +121,32 @@
 
 	<!-- section Script -->
 	<?php require_once("../../../sections/admin/script.php"); ?>
+
+	<!-- Notifications SweetAlert -->
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+	<?php if (isset($_GET['error']) && $_GET['error'] == 1 && isset($_GET['message'])): ?>
+		<script>
+			Swal.fire({
+				icon: 'error',
+				title: '<?= htmlspecialchars(urldecode($_GET['title'] ?? 'Erreur'), ENT_QUOTES, 'UTF-8') ?>',
+				text:  '<?= htmlspecialchars(urldecode($_GET['message']), ENT_QUOTES, 'UTF-8') ?>'
+			});
+		</script>
+	<?php endif; ?>
+
+	<?php if (isset($_GET['Success']) && $_GET['Success'] == 1 && isset($_GET['message'])): ?>
+		<script>
+			Swal.fire({
+				icon: 'success',
+				title: '<?= htmlspecialchars(urldecode($_GET['title'] ?? 'Succès'), ENT_QUOTES, 'UTF-8') ?>',
+				text:  '<?= htmlspecialchars(urldecode($_GET['message']), ENT_QUOTES, 'UTF-8') ?>',
+				timer: 1500,
+				timerProgressBar: true,
+				showConfirmButton: false
+			});
+		</script>
+	<?php endif; ?>
+
 </body>
 </html>

@@ -40,6 +40,18 @@ class Database {
 
 
 
+    // Méthode utilitaire pour exécuter des requêtes directes
+    public function execSQL($sql, $params = []) {
+        try {
+            $stmt = $this->pdo->prepare($sql);
+            return $stmt->execute($params);
+        } catch (PDOException $e) {
+            error_log("Erreur execSQL : " . $e->getMessage());
+            return false;
+        }
+    }
+
+
 }
 
 ?>

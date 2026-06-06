@@ -79,13 +79,7 @@ CREATE TABLE Excursion (
     adresse VARCHAR(255),
     date DATE,
     prix FLOAT,
-    image VARCHAR(255),
-
-    user_id INT NOT NULL,
-
-    FOREIGN KEY (user_id)
-    REFERENCES Utilisateur(id)
-    ON DELETE CASCADE
+    image VARCHAR(255)
 );
 
 CREATE TABLE ReservationExcursion (
@@ -111,6 +105,7 @@ CREATE TABLE DemandeProprietaire (
     statut ENUM('en_attente','acceptee','refusee'),
     date DATE,
     description TEXT,
+    preuve VARCHAR(255),
 
     user_id INT UNIQUE NOT NULL,
 

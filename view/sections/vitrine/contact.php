@@ -35,7 +35,7 @@
           </div>
 
           <div class="col-lg-6">
-            <form action="controller/ContactController.php" method="post" class="php-email-form" data-aos="fade-up" data-aos-delay="500">
+            <form action="contactController" method="post" class="php-email-form" data-aos="fade-up" data-aos-delay="500">
               <div class="row gy-4">
                 <div class="col-md-6">
                   <input type="text" name="name" class="form-control" placeholder="Votre nom" required>

@@ -49,7 +49,7 @@
         showConfirmButton: false,
         timerProgressBar: true
     });
-</script>
+    </script>
     <?php endif; ?>
 
 <!-- message success -->

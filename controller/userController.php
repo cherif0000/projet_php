@@ -1,160 +1,167 @@
 <?php
 session_start();
+ 
+// ───────────────────────────────────────────────────
+// Déconnexion
+// ───────────────────────────────────────────────────
+if (isset($_GET['logout']) && $_GET['logout'] == 1) {
+    session_destroy();
+    header("Location: login");
+    exit;
+}
+ 
 require_once("../model/UserDB.php");
-
+ 
 $userDB = new UserDB();
-
-// permet de valider l'email et le mot de passe
-
+ 
+// ───────────────────────────────────────────────────
+// Helpers
+// ───────────────────────────────────────────────────
+ 
 function validateLoginFields($email, $password) {
-
     if (empty($email) || empty($password)) {
         return "Veuillez remplir tous les champs.";
     }
-
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         return "Veuillez entrer une adresse email valide.";
     }
-
     return null;
 }
-
-// permet de valider les champs d'inscription
-
+ 
 function validateRegisterFields($nom, $email, $password, $confirmPassword) {
-
     if (empty($nom) || empty($email) || empty($password) || empty($confirmPassword)) {
         return "Veuillez remplir tous les champs.";
     }
-
     if (strlen($nom) < 3) {
         return "Le nom doit contenir au moins 3 caractères.";
     }
-
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         return "Veuillez entrer une adresse email valide.";
     }
-
     if (strlen($password) < 8) {
         return "Le mot de passe doit contenir au moins 8 caractères.";
     }
-
     if ($password !== $confirmPassword) {
         return "Les mots de passe ne correspondent pas.";
     }
-
     return null;
 }
-
-// permet de faire la gestion d'erreurs 
-
+ 
 function setErrorAndRedirect($message, $title, $redirectUrl = "login") {
     $_SESSION['error'] = $message;
-    header("Location: $redirectUrl?error=1&message=" . urlencode($message). "&title=" . urlencode($title));
+    header("Location: $redirectUrl?error=1&message=" . urlencode($message) . "&title=" . urlencode($title));
     exit();
 }
-
-// permet d'itentifier un super administrateur
-
+ 
+// ───────────────────────────────────────────────────
+// Super Admin
+// ───────────────────────────────────────────────────
+ 
 function authSuperAdmin($email, $password) {
     if ($email === "admin@gmail.com" && $password === "passer123") {
-        $_SESSION['id'] = 1; 
-        $_SESSION['nom'] = "cherif abdeldjelil";
+        $_SESSION['id']    = 1;
+        $_SESSION['nom']   = "cherif abdeldjelil";
         $_SESSION['email'] = $email;
-
-        header("Location: admin?Success=1&message=" . urlencode("Connexion réussie."). "&title=" . urlencode("Connexion réussie."));
+        $_SESSION['role']  = 'superadmin'; // ← rôle superadmin
+        header("Location: admin?Success=1&message=" . urlencode("Connexion réussie.") . "&title=" . urlencode("Connexion réussie."));
         exit;
-
+    }
 }
-}
-
-// permet d'itentifier un administrateur
-
-function authAdmin($email, $password,$userDB) {
+ 
+// ───────────────────────────────────────────────────
+// Admin login
+// ───────────────────────────────────────────────────
+ 
+function authAdmin($email, $password, $userDB) {
     $user = $userDB->login($email, $password);
-
+ 
     if ($user) {
-        $_SESSION['id'] = $user['id'];
-        $_SESSION['nom'] = $user['nom'];
+        $_SESSION['id']    = $user['id'];
+        $_SESSION['nom']   = $user['nom'];
         $_SESSION['email'] = $user['email'];
-
-       if (ISSET($_POST['remember'])) {
+        $_SESSION['role']  = $user['role'];
+ 
+        if (isset($_POST['remember'])) {
             setcookie("remenber_me", $user['id'], time() + (86400 * 30), "/", "", false, true);
         }
-
-        header("Location: dashboard?Success=1&message=" . urlencode("Connexion réussie."). "&title=" . urlencode("Connexion réussie."));
+ 
+        // Redirection selon le rôle
+        if ($user['role'] === 'proprietaire') {
+            header("Location: admin?Success=1&message=" . urlencode("Connexion réussie.") . "&title=" . urlencode("Connexion réussie."));
+        } else {
+            header("Location: dashboard?Success=1&message=" . urlencode("Connexion réussie.") . "&title=" . urlencode("Connexion réussie."));
+        }
         exit;
-
     }
-
+ 
     return false;
 }
-
-// permet d'inscrire un nouvel utilisateur
-
+ 
+// ───────────────────────────────────────────────────
+// Inscription
+// ───────────────────────────────────────────────────
+ 
 function registerUser($nom, $email, $password, $userDB) {
-
     if ($userDB->emailExists($email)) {
         setErrorAndRedirect("Cette adresse email est déjà utilisée.", "Email déjà existant", "inscription");
     }
-
     if ($userDB->register($nom, $email, $password)) {
-        header("Location: inscription?Success=1&message=" . urlencode("Votre compte a été créé avec succès."). "&title=" . urlencode("Inscription réussie !"));
+        header("Location: inscription?Success=1&message=" . urlencode("Votre compte a été créé avec succès.") . "&title=" . urlencode("Inscription réussie !"));
         exit;
     }
-
     setErrorAndRedirect("Une erreur est survenue lors de l'inscription. Veuillez réessayer.", "Erreur", "inscription");
 }
-
- if ($_SERVER['REQUEST_METHOD']== "POST") {
-
-    // traitement du formulaire de connexion
-
+ 
+// ───────────────────────────────────────────────────
+// Suppression utilisateur
+// ───────────────────────────────────────────────────
+ 
+if (isset($_GET['action']) && $_GET['action'] === 'supprimer') {
+    $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+ 
+    if ($id > 0 && $userDB->deleteUser($id)) {
+        header("Location: utilisateur?Success=1&message=" . urlencode("Utilisateur supprimé avec succès.") . "&title=" . urlencode("Suppression réussie"));
+    } else {
+        header("Location: utilisateur?error=1&message=" . urlencode("Impossible de supprimer cet utilisateur.") . "&title=" . urlencode("Erreur"));
+    }
+    exit;
+}
+ 
+// ───────────────────────────────────────────────────
+// Traitement des formulaires POST
+// ───────────────────────────────────────────────────
+ 
+if ($_SERVER['REQUEST_METHOD'] === "POST") {
+ 
+    // Connexion
     if (isset($_POST['frmLogin'])) {
-        $email = trim($_POST['email'] ?? '');
+        $email    = trim($_POST['email']    ?? '');
         $password = trim($_POST['password'] ?? '');
-
-       // validation des champs
-
-       $messageError = validateLoginFields($email, $password);
-
+ 
+        $messageError = validateLoginFields($email, $password);
         if ($messageError) {
             setErrorAndRedirect($messageError, "Erreur de validation");
         }
-
-        // authentification super admin
-
-        if (authSuperAdmin($email, $password)) {
-            exit;
-        }
-
-        // authentification admin via login
-
-        if (!authAdmin($email, $password,$userDB)) {
+ 
+        authSuperAdmin($email, $password);
+ 
+        if (!authAdmin($email, $password, $userDB)) {
             setErrorAndRedirect("Email ou mot de passe incorrect.", "Erreur d'authentification");
         }
     }
-
-    // traitement du formulaire d'inscription
-
+ 
+    // Inscription
     if (isset($_POST['frmRegister'])) {
         $nom             = trim($_POST['nom']             ?? '');
         $email           = trim($_POST['email']           ?? '');
         $password        = trim($_POST['password']        ?? '');
         $confirmPassword = trim($_POST['confirmPassword'] ?? '');
-
-        // validation des champs
-
+ 
         $messageError = validateRegisterFields($nom, $email, $password, $confirmPassword);
-
         if ($messageError) {
             setErrorAndRedirect($messageError, "Erreur de validation", "inscription");
         }
-
-        // inscription de l'utilisateur
-
+ 
         registerUser($nom, $email, $password, $userDB);
     }
- }
-
-?>
+}

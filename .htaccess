@@ -39,3 +39,11 @@ RewriteRule ^logementDB$ model/LogementDB.php
 RewriteRule ^reservationLogementDB$ model/ReservationLogementDB.php
 RewriteRule ^reservationExcursionDB$ model/ReservationExcursionDB.php
 RewriteRule ^avisDB$ model/AvisDB.php
+# pages client détail
+RewriteRule ^logementDetail$ view/pages/client/logementDetail.php
+RewriteRule ^excursionDetail$ view/pages/client/excursionDetail.php
+
+# controller client
+RewriteRule ^clientController$ controller/ClientController.php
+
+RewriteRule ^demandeClientController$ controller/DemandeClientController.php

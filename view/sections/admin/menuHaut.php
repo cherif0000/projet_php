@@ -19,7 +19,7 @@
 					</a>
 					<div class="dropdown-menu dropdown-menu-right">
 						
-						<a href="javascript:;" class="dropdown-item">Log Out</a>
+						<a href="userController?logout=1" class="dropdown-item"><i class="fa fa-sign-out-alt mr-2"></i>Déconnexion</a>
 					</div>
 				</li>
 			</ul>

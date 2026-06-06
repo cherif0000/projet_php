@@ -20,21 +20,21 @@
             <li class="dropdown">
               <a href="#"><span><i class="bi bi-person-circle me-1"></i><?= htmlspecialchars($_SESSION['user_nom']) ?></span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
               <ul>
-                <li><a href="view/pages/dashboard.php"><i class="bi bi-speedometer2 me-1"></i>Mon espace</a></li>
-                <li><a href="controller/UserController.php?logout=1"><i class="bi bi-box-arrow-right me-1"></i>Déconnexion</a></li>
+                <li><a href="dashboard"><i class="bi bi-speedometer2 me-1"></i>Mon espace</a></li>
+                <li><a href="userController?logout=1"><i class="bi bi-box-arrow-right me-1"></i>Déconnexion</a></li>
               </ul>
             </li>
           <?php else: ?>
-            <li><a href="login.php">Connexion</a></li>
+            <li><a href="login">Connexion</a></li>
           <?php endif; ?>
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
 
       <?php if (!isset($_SESSION['user_id'])): ?>
-        <a class="btn-getstarted" href="inscription.php">S'inscrire</a>
+        <a class="btn-getstarted" href="inscription">S'inscrire</a>
       <?php else: ?>
-        <a class="btn-getstarted" href="view/pages/dashboard.php">Mon espace</a>
+        <a class="btn-getstarted" href="dashboard">Mon espace</a>
       <?php endif; ?>
 
     </div>
